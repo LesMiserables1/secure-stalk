@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const fetch = require('node-fetch')
 const FormData = require('form-data')
 const fs = require('fs')
 require('dotenv').config()
@@ -14,6 +13,14 @@ app.use(bodyParser.json())
 app.get('/bot',(req,res)=>{
     let body = req.body
     console.log(body);
+    res.send('hallo')
+})
+app.get('/',(req,res)=>{
+    res.send('hellow')
+})
+app.post('/bot',(req,res)=>{
+    let result = req.body
+    console.log(result)
 })
 
 app.listen(8000)
