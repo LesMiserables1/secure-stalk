@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const FormData = require('form-data')
+const formData = require('form-data')
 const fs = require('fs')
 require('dotenv').config()
 
@@ -19,9 +19,24 @@ app.get('/bot',(req,res)=>{
 app.get('/',(req,res)=>{
     res.send('hellow')
 })
+
+sendMessage = async (message) => {
+    const form = new formData()
+    form.append('chat_id', message.chat.id)
+    console.log(message.chat.id)
+    form.append('text', 'HALOOO')
+    axios.post(url_bot + '/sendMessage', form, { headers: form.getHeaders() })
+        .then(resp => console.log(resp))
+        .catch(er => console.log(er))
+}
+
 app.post('/bot',(req,res)=>{
-    let result = req.body
-    console.log(result)
+    let { update_id, message } = req.body
+    if (app_update_id < update_id) {
+        app_update_id = update_id
+        sendMessage(message)
+    }
+    res.send('HEllo')
 })
 
 app.listen(port)
