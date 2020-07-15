@@ -24,7 +24,7 @@ app.post('/bot',(req,res)=>{
     console.log(result)
 })
 
-app.listen(PORT)
+app.listen(port)
 
 // queryMessage = async (body)=>{
 //     let result = body.result
