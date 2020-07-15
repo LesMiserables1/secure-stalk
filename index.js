@@ -2,12 +2,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const formData = require('form-data')
 const fs = require('fs')
+const axios = require('axios')
 require('dotenv').config()
 
 const token = process.env.TOKEN_BOT
 const url_bot = 'https://api.telegram.org/bot'+token
 var port = process.env.PORT || 3000
 
+let app_update_id = 1
 let app = express()
 app.use(bodyParser.json())
 
