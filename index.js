@@ -6,7 +6,7 @@ require('dotenv').config()
 
 const token = process.env.TOKEN_BOT
 const url_bot = 'https://api.telegram.org/bot'+token
-
+var port = process.env.PORT || 3000
 let app = express()
 app.use(bodyParser.json())
 
@@ -23,7 +23,7 @@ app.post('/bot',(req,res)=>{
     console.log(result)
 })
 
-app.listen(8000)
+app.listen(PORT)
 
 // queryMessage = async (body)=>{
 //     let result = body.result
