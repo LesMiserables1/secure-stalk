@@ -1,12 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const formData = require('form-data')
 const fs = require('fs')
-const axios = require('axios')
-require('dotenv').config()
 
-const token = process.env.TOKEN_BOT
-const url_bot = 'https://api.telegram.org/bot'+token
+require('dotenv').config()
+const {startCommand,searchCommand} = require('./bot.js')
+
+
+
 var port = process.env.PORT || 3000
 
 let app_update_id = 1
@@ -22,21 +22,27 @@ app.get('/',(req,res)=>{
     res.send('hellow')
 })
 
-sendMessage = async (message) => {
-    const form = new formData()
-    form.append('chat_id', message.chat.id)
-    console.log(message.chat.id)
-    form.append('text', 'HALOOO')
-    axios.post(url_bot + '/sendMessage', form, { headers: form.getHeaders() })
-        .then(resp => console.log(resp))
-        .catch(er => console.log(er))
-}
+// sendMessage = async (message) => {
+//     const form = new formData()
+//     form.append('chat_id', message.chat.id)
+//     console.log(message.chat.id)
+//     form.append('text', 'HALOOO')
+//     axios.post(url_bot + '/sendMessage', form, { headers: form.getHeaders() })
+//         .then(resp => console.log(resp))
+//         .catch(er => console.log(er))
+// }
 
 app.post('/bot',(req,res)=>{
     let { update_id, message } = req.body
     if (app_update_id < update_id) {
+        let command = message.text
+        // let command = query_command.substr(0,query_command.indexOf(' '))
+        if(command == '/start'){
+            startCommand(message)
+        }
         app_update_id = update_id
-        sendMessage(message)
+    }else if(command == '/search'){
+        
     }
     res.send('HEllo')
 })
